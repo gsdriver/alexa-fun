@@ -1,0 +1,3 @@
+PokemonTypeIntent what type is {Pokemon}
+PokemonTypeIntent what is {Pokemon} type
+PokemonTypeIntent what is {Pokemon}
