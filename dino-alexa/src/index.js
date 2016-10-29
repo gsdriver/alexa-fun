@@ -49,8 +49,8 @@ DinoSkill.prototype.intentHandlers = {
 
 function GetDinoResponse() {
     var responseTable = [ 
-        "DINOTRUX! GET IT DONE! GOING STRONG! DIONOTUX! ROAR!",
-        "CRUSH IT! SMASH IT! MOVE IT! LIFT IT!",
+        "DINOTRUX! GET it DONE! GOING STRONG! DIONOTUX! ROAR!",
+        "CRUSH it! SMASH it! MOVE it! LIFT it!",
         "Ty Rux",
         "Ton-Ton",
         "Dozer"
