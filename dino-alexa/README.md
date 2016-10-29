@@ -1,3 +1,3 @@
-# suger-alexa
+# dino-alexa
 
-Simple Alexa skill that ignores the input and provides a random saying from Suger
+A simple Alexa skill written by Samantha that ignores the input and provides a random saying from Dino
