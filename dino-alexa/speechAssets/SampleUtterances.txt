@@ -1,0 +1,5 @@
+DinoIntent hi
+DinoIntent what
+DinoIntent how
+DinoIntent is
+DinoIntent are

@@ -52,6 +52,11 @@ function GetSugerResponse() {
         "I like steak",
         "When's dinner?",
         "Can we go for a walk?",
+        "HOT MILK!!!!",
+        "bark bark!",
+        "I want to go to the park and chew up chew toys",
+        "DINOTRUX! GET IT DONE! GOING STRONG! DIONOTUX! ROARRRRR!",
+        "CRUSH IT! SMASH IT! MOVE IT! LIFT IT!",
         "Where's mom?"
     ];
 
