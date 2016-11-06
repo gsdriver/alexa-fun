@@ -219,7 +219,7 @@ console.log(JSON.stringify(wineCharacteristics));
  */
 function WineToText(wine, wineCharacteristics)
 {
-    var speech = wine.Wine;
+    var speech = (wine.Vintage) ? (wine.Vintage + " " + wine.Wine) : wine.Wine;
 
     if (wineCharacteristics.minScore)
     {

@@ -157,9 +157,10 @@ function SendAlexaResponse(speechError, speech, response)
             speech: speech,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
-        console.log(speech);
-        response.tellWithCard(speechOutput, cardTitle, speechOutput);
+        response.tellWithCard(speechOutput, cardTitle, speech);
     }
+
+    console.log(speechOutput.speech);
 }
 
 /*
