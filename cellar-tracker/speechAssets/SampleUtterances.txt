@@ -1,0 +1,46 @@
+PickWineIntent to pick a wine
+PickWineIntent to select a wine
+PickWineIntent to choose a wine
+PickWineIntent to recommend a wine
+PickWineIntent pick a wine
+PickWineIntent select a wine
+PickWineIntent choose a wine
+PickWineIntent recommend a wine
+PickWineIntent to pick a {Descriptor1} wine
+PickWineIntent to select a {Descriptor1} wine
+PickWineIntent to choose a {Descriptor1} wine
+PickWineIntent to recommend a {Descriptor1} wine
+PickWineIntent pick a {Descriptor1} wine
+PickWineIntent select a {Descriptor1} wine
+PickWineIntent choose a {Descriptor1} wine
+PickWineIntent recommend a {Descriptor1} wine
+PickWineIntent to pick an {Descriptor1} wine
+PickWineIntent to select an {Descriptor1} wine
+PickWineIntent to choose an {Descriptor1} wine
+PickWineIntent to recommend an {Descriptor1} wine
+PickWineIntent pick an {Descriptor1} wine
+PickWineIntent select an {Descriptor1} wine
+PickWineIntent choose an {Descriptor1} wine
+PickWineIntent recommend an {Descriptor1} wine
+PickWineIntent to pick a {Descriptor1} {Descriptor2} wine
+PickWineIntent to select a {Descriptor1} {Descriptor2} wine
+PickWineIntent to choose a {Descriptor1} {Descriptor2} wine
+PickWineIntent to recommend a {Descriptor1} {Descriptor2} wine
+PickWineIntent pick a {Descriptor1} {Descriptor2} wine
+PickWineIntent select a {Descriptor1} {Descriptor2} wine
+PickWineIntent choose a {Descriptor1} {Descriptor2} wine
+PickWineIntent recommend a {Descriptor1} {Descriptor2} wine
+PickWineIntent to pick an {Descriptor1} {Descriptor2} wine
+PickWineIntent to select an {Descriptor1} {Descriptor2} wine
+PickWineIntent to choose an {Descriptor1} {Descriptor2} wine
+PickWineIntent to recommend an {Descriptor1} {Descriptor2} wine
+PickWineIntent pick an {Descriptor1} {Descriptor2} wine
+PickWineIntent select an {Descriptor1} {Descriptor2} wine
+PickWineIntent choose an {Descriptor1} {Descriptor2} wine
+PickWineIntent recommend an {Descriptor1} {Descriptor2} wine
+ReadWineListIntent read my list
+ReadWineListIntent read the list
+ReadWineListIntent read list
+ReadWineListIntent read me my list
+ReadWineListIntent read me the list
+ReadWineListIntent read me list

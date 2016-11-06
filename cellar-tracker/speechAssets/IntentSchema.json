@@ -1,0 +1,29 @@
+{
+  "intents": [
+    {
+      "intent": "PickWineIntent",
+      "slots": [
+      {
+        "name": "Description1",
+        "type": "LIST_OF_DESCRIPTORS"
+      },
+      {
+        "name": "Description2",
+        "type": "LIST_OF_DESCRIPTORS"
+      }
+     ]
+    },
+    {
+      "intent": "ReadWineListIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
