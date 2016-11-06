@@ -28,7 +28,7 @@ var AlexaSkill = require('./AlexaSkill');
 var WineSelector = require('./WineSelector');
 var CellarTracker = require('./CellarTracker');
 
-var APP_ID = undefined; //"amzn1.ask.skill.94d09885-df32-4bf9-88c4-4670dbc14140";
+var APP_ID = "amzn1.ask.skill.0a75de20-0209-4b51-ba16-4958a157cdd4";
 
 var WineApp = function () {
     AlexaSkill.call(this, APP_ID);
@@ -57,8 +57,8 @@ WineApp.prototype.intentHandlers = {
         var numDescriptions = 0;
 
         // Build the characteristics object - you can have up to two descriptions
-        numDescriptions += (AddWineDescriptor(wineCharacteristics, intent.slots.Description1) ? 1 : 0);
-        numDescriptions += (AddWineDescriptor(wineCharacteristics, intent.slots.Description2) ? 1 : 0);
+        numDescriptions += (AddWineDescriptor(wineCharacteristics, intent.slots.FirstDescriptor) ? 1 : 0);
+        numDescriptions += (AddWineDescriptor(wineCharacteristics, intent.slots.SecondDescriptor) ? 1 : 0);
 
         // If there were no descriptions, we'll just pick a random wine
         if (!numDescriptions)
@@ -157,6 +157,7 @@ function SendAlexaResponse(speechError, speech, response)
             speech: speech,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
+        console.log(speech);
         response.tellWithCard(speechOutput, cardTitle, speechOutput);
     }
 }

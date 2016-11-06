@@ -6,38 +6,38 @@ PickWineIntent pick a wine
 PickWineIntent select a wine
 PickWineIntent choose a wine
 PickWineIntent recommend a wine
-PickWineIntent to pick a {Descriptor1} wine
-PickWineIntent to select a {Descriptor1} wine
-PickWineIntent to choose a {Descriptor1} wine
-PickWineIntent to recommend a {Descriptor1} wine
-PickWineIntent pick a {Descriptor1} wine
-PickWineIntent select a {Descriptor1} wine
-PickWineIntent choose a {Descriptor1} wine
-PickWineIntent recommend a {Descriptor1} wine
-PickWineIntent to pick an {Descriptor1} wine
-PickWineIntent to select an {Descriptor1} wine
-PickWineIntent to choose an {Descriptor1} wine
-PickWineIntent to recommend an {Descriptor1} wine
-PickWineIntent pick an {Descriptor1} wine
-PickWineIntent select an {Descriptor1} wine
-PickWineIntent choose an {Descriptor1} wine
-PickWineIntent recommend an {Descriptor1} wine
-PickWineIntent to pick a {Descriptor1} {Descriptor2} wine
-PickWineIntent to select a {Descriptor1} {Descriptor2} wine
-PickWineIntent to choose a {Descriptor1} {Descriptor2} wine
-PickWineIntent to recommend a {Descriptor1} {Descriptor2} wine
-PickWineIntent pick a {Descriptor1} {Descriptor2} wine
-PickWineIntent select a {Descriptor1} {Descriptor2} wine
-PickWineIntent choose a {Descriptor1} {Descriptor2} wine
-PickWineIntent recommend a {Descriptor1} {Descriptor2} wine
-PickWineIntent to pick an {Descriptor1} {Descriptor2} wine
-PickWineIntent to select an {Descriptor1} {Descriptor2} wine
-PickWineIntent to choose an {Descriptor1} {Descriptor2} wine
-PickWineIntent to recommend an {Descriptor1} {Descriptor2} wine
-PickWineIntent pick an {Descriptor1} {Descriptor2} wine
-PickWineIntent select an {Descriptor1} {Descriptor2} wine
-PickWineIntent choose an {Descriptor1} {Descriptor2} wine
-PickWineIntent recommend an {Descriptor1} {Descriptor2} wine
+PickWineIntent to pick a {FirstDescriptor} wine
+PickWineIntent to select a {FirstDescriptor} wine
+PickWineIntent to choose a {FirstDescriptor} wine
+PickWineIntent to recommend a {FirstDescriptor} wine
+PickWineIntent pick a {FirstDescriptor} wine
+PickWineIntent select a {FirstDescriptor} wine
+PickWineIntent choose a {FirstDescriptor} wine
+PickWineIntent recommend a {FirstDescriptor} wine
+PickWineIntent to pick an {FirstDescriptor} wine
+PickWineIntent to select an {FirstDescriptor} wine
+PickWineIntent to choose an {FirstDescriptor} wine
+PickWineIntent to recommend an {FirstDescriptor} wine
+PickWineIntent pick an {FirstDescriptor} wine
+PickWineIntent select an {FirstDescriptor} wine
+PickWineIntent choose an {FirstDescriptor} wine
+PickWineIntent recommend an {FirstDescriptor} wine
+PickWineIntent to pick a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to select a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to choose a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to recommend a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent pick a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent select a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent choose a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent recommend a {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to pick an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to select an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to choose an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent to recommend an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent pick an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent select an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent choose an {FirstDescriptor} {SecondDescriptor} wine
+PickWineIntent recommend an {FirstDescriptor} {SecondDescriptor} wine
 ReadWineListIntent read my list
 ReadWineListIntent read the list
 ReadWineListIntent read list

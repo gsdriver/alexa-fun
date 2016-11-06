@@ -54,7 +54,7 @@ module.exports = {
         else
         {
             // Pick randomly from the filtered list
-            var wine = wineList.wines[Math.floor(Math.random() * newList.length)];
+            var wine = newList[Math.floor(Math.random() * newList.length)];
 
             return (WineToText(wine, wineCharacteristics) + " is a good choice. You have " + wine.Quantity + ((wine.Quantity == 1) ? " bottle." : " bottles."));
         }

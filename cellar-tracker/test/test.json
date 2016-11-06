@@ -1,0 +1,32 @@
+{
+  "session": {
+    "sessionId": "SessionId.0b107f3d-53c9-4be2-bdfd-f8bcefc664ec",
+    "application": {
+      "applicationId": "amzn1.ask.skill.0a75de20-0209-4b51-ba16-4958a157cdd4"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AEDVBSXICWBJB3EW2SZQADVZ4GETV267HPXTBSEZFAXE32OJI74ZIKETWLJSQT3HPO7LUXEDNUWCRSVLOOCCUPZZ5GVMB23WT2GH5MWYKERXKHGVTIWHMV4GK2YPEK4RN2WZDYGRLSS2KTW7HLA4JDHP2DVMLSPE7JQZBSJHEA4LZZM72NH7AYN2WI5SEZXQOFTOPF342IUSMPA"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.67618591-ec93-47fc-bebc-eacf3f03a7e8",
+    "locale": "en-US",
+    "timestamp": "2016-11-06T15:26:42Z",
+    "intent": {
+      "name": "PickWineIntent",
+      "slots": {
+        "SecondDescriptor": {
+          "name": "SecondDescriptor"
+        },
+        "FirstDescriptor": {
+          "name": "FirstDescriptor",
+          "value": "red"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

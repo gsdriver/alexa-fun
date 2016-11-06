@@ -4,11 +4,11 @@
       "intent": "PickWineIntent",
       "slots": [
       {
-        "name": "Description1",
+        "name": "FirstDescriptor",
         "type": "LIST_OF_DESCRIPTORS"
       },
       {
-        "name": "Description2",
+        "name": "SecondDescriptor",
         "type": "LIST_OF_DESCRIPTORS"
       }
      ]

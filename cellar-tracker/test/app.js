@@ -3,14 +3,14 @@ var wineO = require('../src/index');
 function BuildEvent(argv)
 {
     // Templates that can fill in the intent
-    var pickWineIntent = {"name": "PickWineIntent", "slots": {"Description1": {"name": "Description1", "value": ""}, "Description2": {"name": "Description2", "value": ""}}};
+    var pickWineIntent = {"name": "PickWineIntent", "slots": {"FirstDescriptor": {"name": "FirstDescriptor", "value": ""}, "SecondDescriptor": {"name": "SecondDescriptor", "value": ""}}};
     var readListIntent = {"name": "ReadWineListIntent", "slots": {}};
 
     var lambda = {
        "session": {
          "sessionId": "SessionId.c88ec34d-28b0-46f6-a4c7-120d8fba8fa7",
          "application": {
-           "applicationId": "amzn1.ask.skill.74ea63e3-3295-463f-8ea5-cd80f4b6cfc9"
+           "applicationId": "amzn1.ask.skill.0a75de20-0209-4b51-ba16-4958a157cdd4"
          },
          "attributes": {},
          "user": {
@@ -35,8 +35,8 @@ function BuildEvent(argv)
     }
     else if (argv[2] == "pick")
     {
-        pickWineIntent.slots.Description1.value = (argv.length > 3) ? argv[3] : "";
-        pickWineIntent.slots.Description2.value = (argv.length > 4) ? argv[4] : "";
+        pickWineIntent.slots.FirstDescriptor.value = (argv.length > 3) ? argv[3] : "";
+        pickWineIntent.slots.SecondDescriptor.value = (argv.length > 4) ? argv[4] : "";
         lambda.request.intent = pickWineIntent;
     }
 
