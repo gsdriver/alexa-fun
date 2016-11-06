@@ -32,7 +32,7 @@ const nearConsumeCutoff = 2;    // How far out can you be to be considered near 
  *
  * vintage: old or new
  * type: red or white
- * minScore: minimum CT score
+ * scoreRange: minimum CT score
  * varietal: cabernet, syrah, chardonnay, merlot, zinfandel, pinot noir, malbec, red blend, white blend
  * consumeDate: over, now, or near
  * special: big red or light white
@@ -86,10 +86,10 @@ function ReadCharacteristics(wineCharacteristics)
         speech += wineCharacteristics.special + " ";
     }
 
-    // Now for minScore and consumeDate
-    if (wineCharacteristics.hasOwnProperty("minScore"))
+    // Now for scoreRange and consumeDate
+    if (wineCharacteristics.hasOwnProperty("scoreRange"))
     {
-        speech += (wineCharacteristics.minScore + " point ");
+        speech += (wineCharacteristics.scoreRange[0] + " to " + wineCharacteristics.scoreRange[1] + " point ");
     }
     if (wineCharacteristics.hasOwnProperty("consumeDate"))
     {
@@ -144,9 +144,9 @@ console.log(JSON.stringify(wineCharacteristics));
             }
         }
 
-        // minScore filter
-        if (wineCharacteristics.minScore) {
-            if (!wine.CT || (wine.CT < wineCharacteristics.minScore)) {
+        // scoreRange filter
+        if (wineCharacteristics.scoreRange) {
+            if (!wine.CT || (wine.CT < wineCharacteristics.scoreRange[0]) || (wine.CT > wineCharacteristics.scoreRange[1])) {
                 passes = false;
             }
         }
@@ -221,7 +221,7 @@ function WineToText(wine, wineCharacteristics)
 {
     var speech = (wine.Vintage) ? (wine.Vintage + " " + wine.Wine) : wine.Wine;
 
-    if (wineCharacteristics.minScore)
+    if (wineCharacteristics.scoreRange)
     {
         // Round the score to one decimal point
         speech += " with a score of " + wine.CT.toFixed(1);
