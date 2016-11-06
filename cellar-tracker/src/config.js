@@ -1,7 +1,7 @@
 var config = {};
 
 // Local host settings
-config.userName = "<<Your Username>>";
-config.password = "<<Your Password>>";
+config.userName = "<<Your username>>";
+config.password = "<<Your password>>";
 
 module.exports = config;
