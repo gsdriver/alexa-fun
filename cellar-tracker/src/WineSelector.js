@@ -155,7 +155,7 @@ console.log(JSON.stringify(wineCharacteristics));
         if (wineCharacteristics.varietal) {
             if (!wine.MasterVarietal) {
                 passes = false;
-            } else if (!wine.MasterVarietal.toLowerCase().indexOf(wine.MasterVarietal) == -1) {
+            } else if (wine.MasterVarietal.toLowerCase().indexOf(wineCharacteristics.varietal) == -1) {
                 // Not an exact substring, but there are exceptions that pass the filter
                 passes = false;
                 if ((wine.MasterVarietal == "red blend") && (wine.MasterVarietal.toLowerCase().indexOf("bordeaux blend") > -1)) {
