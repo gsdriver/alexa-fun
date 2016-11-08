@@ -56,7 +56,7 @@ module.exports = {
             // Pick randomly from the filtered list
             var wine = newList[Math.floor(Math.random() * newList.length)];
 
-            return (WineToText(wine, wineCharacteristics) + " is a good choice. You have " + wine.Quantity + ((wine.Quantity == 1) ? " bottle." : " bottles."));
+            return DescribeWineChoice(wine, wineCharacteristics);
         }
     }
 };
@@ -121,8 +121,13 @@ console.log(JSON.stringify(wineCharacteristics));
     wineList.wines.forEach(wine => {
         let passes = true;  // You pass the filter by default
 
-        // Location filter - only consider wines in the house
-        if (!wine.Location || (wine.Location.toLowerCase() != "cellar")) {
+        // Location filter - only consider wines in the house unless a location is provided
+        if (!wineCharacteristics.location) {
+            if (!wine.Location || (wine.Location.toLowerCase().indexOf("cellar") == -1)) {
+                passes = false;
+            }
+        }
+        else if (!wine.Location || (wine.Location.toLowerCase().indexOf(wineCharacteristics.location) == -1)) {
             passes = false;
         }
 
@@ -140,6 +145,13 @@ console.log(JSON.stringify(wineCharacteristics));
         // Type filter
         if (wineCharacteristics.type) {
             if (!wine.Type || (wine.Type.toLowerCase().indexOf(wineCharacteristics.type) == -1)) {
+                passes = false;
+            }
+        }
+
+        // minQuantity filter
+        if (wineCharacteristics.minQuantity) {
+            if (!wine.Quantity || (wine.Quantity < wineCharacteristics.minQuantity)) {
                 passes = false;
             }
         }
@@ -243,6 +255,32 @@ function WineToText(wine, wineCharacteristics)
         // Read the master varietal
         speech += " a " + wine.MasterVarietal;
     }
+    if (wineCharacteristics.location)
+    {
+        speech += " in " + wine.Location;
+    }
 
+    return speech;
+}
+
+function DescribeWineChoice(wine, wineCharacteristics)
+{
+    var speech;
+    var winePattern = [
+        "I've heard good things about {wine}.",
+        "{wine} is a good choice.",
+        "You should consider {wine}.",
+        "There is a {wine} you should try.",
+        "Let's open {wine}."
+    ];
+
+    // First get the bottle description
+    var wineText = WineToText(wine, wineCharacteristics);
+
+    // Now a random descriptor
+    speech = winePattern[Math.floor(Math.random() * winePattern.length)].replace("{wine}", wineText);
+
+    // Finally let them know how many bottles they have
+    speech += " You have " + wine.Quantity + ((wine.Quantity == 1) ? " bottle." : " bottles.");
     return speech;
 }

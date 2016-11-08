@@ -194,7 +194,20 @@ function AddWineDescriptor(wineCharacteristics, descriptorSlot)
             "expired": {field: "consumeDate", value: "over"},
             "near due": {field: "consumeDate", value: "near"},
             "near": {field: "consumeDate", value: "near"},
-            "ready to drink": {field: "consumeDate", value: "now"}
+            "ready to drink": {field: "consumeDate", value: "now"},
+            "multiple bottles": {field: "minQuantity", value: 2},
+            "multiple": {field: "minQuantity", value: 2},
+            "more than one": {field: "minQuantity", value: 2},
+            "more than one bottle": {field: "minQuantity", value: 2},
+            "more than 1": {field: "minQuantity", value: 2},
+            "more than 1 bottle": {field: "minQuantity", value: 2},
+            "with multiple bottles": {field: "minQuantity", value: 2},
+            "with multiple": {field: "minQuantity", value: 2},
+            "with more than one": {field: "minQuantity", value: 2},
+            "with more than one bottle": {field: "minQuantity", value: 2},
+            "with more than 1": {field: "minQuantity", value: 2},
+            "with more than 1 bottle": {field: "minQuantity", value: 2},
+            "in storage": {field: "location", value: "storage"},
         };
     var descriptor = null;
 
