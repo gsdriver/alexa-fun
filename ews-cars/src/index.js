@@ -26,6 +26,7 @@
 
 var AlexaSkill = require('./AlexaSkill');
 var EWSCar = require('./EWSCar');
+var SO = require('./SpeechOutput');
 
 var APP_ID = undefined; //"amzn1.ask.skill.8fb6e399-d431-4943-a797-7a6888e7c6ce";
 
@@ -60,8 +61,15 @@ CarSearch.prototype.intentHandlers = {
         }
         else {
             // Let's get the car search results from EWS
-            EWSCar.DoCarSearch(params, function(speechError, speechResponse, speechQuestion, repromptQuestion, carList) {
-                SendAlexaResponse(speechError, speechResponse, speechQuestion, repromptQuestion, response);
+            EWSCar.DoCarSearch(params, function(speechError, carList) {
+                if (speechError) {
+                    SendAlexaResponse(speechError, null, null, null, response);
+                }
+                else {
+                    var speechResponse = SO.GetCarResultText(params, carList);
+
+                    SendAlexaResponse(null, speechResponse, null, null, response);
+                }
             });
         }
     },
@@ -144,29 +152,39 @@ function GetIntentDate(dateSlot, timeSlot, baseDate, offsetDays)
     if (dateSlot && dateSlot.value)
     {
         // Use this one - round time up to the nearest 30 minutes
-        dat = new Date(dateSlot.value);
+        var base = new Date(dateSlot.value);
+        dat = new Date(Date.UTC(base.getFullYear(), base.getMonth(), base.getDate()));
 
         // Do I have a time?
         if (timeSlot && timeSlot.value)
         {
             // Can be one of these special values - night: NI, morning: MO, afternoon: AF, evening: EV
-            var timeMapping = {"NI": 21, "MO": 9, "AF": 14, "EV": 17};
+            var timeMapping = {"ni": 21, "mo": 9, "af": 14, "ev": 17};
 
-            if (timeMapping[timeSlot.value])
+            if (timeMapping[timeSlot.value.toLowerCase()])
             {
-                dat.setHours(timeMapping[timeSlot.value], 0);
+                dat.setUTCHours(timeMapping[timeSlot.value.toLowerCase()], 0);
             }
             else
             {
-                var tim = new Date(timeSlot.value);
+                // Split it by the colon
+                var times = timeSlot.value.split(":");
 
-                dat.setHours(tim.getHours(), tim.getMinutes());
+                if ((times.length >= 2) && !isNaN(parseInt(times[0])) && !isNaN(parseInt(times[1])))
+                {
+                    dat.setUTCHours(parseInt(times[0]), parseInt(times[1]));
+                }
+                else
+                {
+                    // Just go with 10:00 AM
+                    dat.setUTCHours(10, 0);
+                }
             }
         }
         else
         {
             // Go with 10:00 AM
-            dat.setHours(10, 0);
+            dat.setUTCHours(10, 0);
         }
 
         // If this date is in the past, null it out so we go with the default
@@ -174,16 +192,16 @@ function GetIntentDate(dateSlot, timeSlot, baseDate, offsetDays)
         {
             dat = null;
         }
-        else
+        else if ((dat.getUTCMinutes() != 0) && (dat.getUTCMinutes() != 30))
         {
             // Snap to 30 minutes
-            if (dat.getMinutes() <= 30)
+            if (dat.getUTCMinutes() < 30)
             {
-                dat.setMinutes(30);
+                dat.setUTCMinutes(30);
             }
             else
             {
-                dat.setHours(dat.getHours() + 1, 0);
+                dat.setUTCHours(dat.getUTCHours() + 1, 0);
             }
         }
     }
@@ -191,11 +209,12 @@ function GetIntentDate(dateSlot, timeSlot, baseDate, offsetDays)
     if (!dat)
     {
         // No date, use the baseDate and offset to set the date
-        dat = new Date(baseDate);
+        var base = new Date(baseDate);
+        dat = new Date(Date.UTC(base.getFullYear(), base.getMonth(), base.getDate()));
         dat.setDate(dat.getDate() + offsetDays);
 
         // Time is set to 10:00 AM
-        dat.setHours(10, 0);
+        dat.setUTCHours(10, 0);
     }
 
     return dat;

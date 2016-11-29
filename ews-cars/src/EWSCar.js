@@ -36,13 +36,11 @@ module.exports = {
             // Now that we have results, we need to turn the results into a string
             if (error)
             {
-                callback(error, null, null, null, null);
+                callback(error, null);
             }
             else
             {
-                // Turn these results into a string
-                var response = GetCarResultText(params, carResults);
-                callback(null, response, null, null, carResults);
+                callback(null, carResults);
             }
         });
     }
@@ -95,32 +93,4 @@ console.log(config.serviceEndpoint + queryString);
     }).on('error', function (e) {
         callback("Communications error: " + e.message, null);
     });
-}
-
-function CarToText(carInfo)
-{
-    var result = "";
-
-    // We return CarMakeModel, CarClass, SupplierName, and total price
-    result += "For " + carInfo.Price.TotalRate.Value + " dollars";
-    result += " a " + carInfo.CarMakeModel;
-    result += " from " + carInfo.SupplierName;
-    result += " which is a " + carInfo.CarClass + " option.";
-
-    return result;
-}
-
-function GetCarResultText(params, carResults)
-{
-    var result = "";
-
-    result = "I found " + carResults.CarInfoList.CarInfo.length + " results ";
-    result += "at " + params.pickuplocation;
-    result += " from " + params.pickupdate;
-    result += " to " + params.dropoffdate + ".";
-    carResults.CarInfoList.CarInfo.forEach(car => {
-        result += " " + CarToText(car);
-    });
-
-    return result;
 }
