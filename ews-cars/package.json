@@ -6,9 +6,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "redis": "^2.6.3"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "test": "test\\app.js"

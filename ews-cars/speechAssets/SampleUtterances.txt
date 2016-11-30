@@ -52,6 +52,60 @@ CarSearchIntent a car at {FirstTLALetter} {SecondTLALetter} {ThirdTLALetter} fro
 CarSearchIntent find a car at {FirstTLALetter} {SecondTLALetter} {ThirdTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
 CarSearchIntent find me a car at {FirstTLALetter} {SecondTLALetter} {ThirdTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
 CarSearchIntent a car at {FirstTLALetter} {SecondTLALetter} {ThirdTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
+CarSearchIntent find cars at {FirstTLALetter}
+CarSearchIntent find me cars at {FirstTLALetter}
+CarSearchIntent cars at {FirstTLALetter}
+CarSearchIntent find cars at {FirstTLALetter} {PickUpDate}
+CarSearchIntent find me cars at {FirstTLALetter} {PickUpDate}
+CarSearchIntent cars at {FirstTLALetter} {PickUpDate}
+CarSearchIntent find cars at {FirstTLALetter} on {PickUpDate}
+CarSearchIntent find me cars at {FirstTLALetter} on {PickUpDate}
+CarSearchIntent cars at {FirstTLALetter} on {PickUpDate}
+CarSearchIntent find cars at {FirstTLALetter} at {PickUpDate}
+CarSearchIntent find me cars at {FirstTLALetter} at {PickUpDate}
+CarSearchIntent cars at {FirstTLALetter} at {PickUpDate}
+CarSearchIntent find cars at {FirstTLALetter} on {PickUpDate} {PickUpTime}
+CarSearchIntent find me cars at {FirstTLALetter} on {PickUpDate} {PickUpTime}
+CarSearchIntent cars at {FirstTLALetter} on {PickUpDate} {PickUpTime}
+CarSearchIntent find cars at {FirstTLALetter} at {PickUpDate} {PickUpTime}
+CarSearchIntent find me cars at {FirstTLALetter} at {PickUpDate} {PickUpTime}
+CarSearchIntent cars at {FirstTLALetter} at {PickUpDate} {PickUpTime}
+CarSearchIntent find cars at {FirstTLALetter} from {PickUpDate} to {DropOffDate}
+CarSearchIntent find me cars at {FirstTLALetter} from {PickUpDate} to {DropOffDate}
+CarSearchIntent cars at {FirstTLALetter} from {PickUpDate} to {DropOffDate}
+CarSearchIntent find cars at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate}
+CarSearchIntent find me cars at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate}
+CarSearchIntent cars at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate}
+CarSearchIntent find cars at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
+CarSearchIntent find me cars at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
+CarSearchIntent cars at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
+CarSearchIntent find a car at {FirstTLALetter}
+CarSearchIntent find me a car at {FirstTLALetter}
+CarSearchIntent a car at {FirstTLALetter}
+CarSearchIntent find a car at {FirstTLALetter} {PickUpDate}
+CarSearchIntent find me a car at {FirstTLALetter} {PickUpDate}
+CarSearchIntent a car at {FirstTLALetter} {PickUpDate}
+CarSearchIntent find a car at {FirstTLALetter} on {PickUpDate}
+CarSearchIntent find me a car at {FirstTLALetter} on {PickUpDate}
+CarSearchIntent a car at {FirstTLALetter} on {PickUpDate}
+CarSearchIntent find a car at {FirstTLALetter} at {PickUpDate}
+CarSearchIntent find me a car at {FirstTLALetter} at {PickUpDate}
+CarSearchIntent a car at {FirstTLALetter} at {PickUpDate}
+CarSearchIntent find a car at {FirstTLALetter} on {PickUpDate} {PickUpTime}
+CarSearchIntent find me a car at {FirstTLALetter} on {PickUpDate} {PickUpTime}
+CarSearchIntent a car at {FirstTLALetter} on {PickUpDate} {PickUpTime}
+CarSearchIntent find a car at {FirstTLALetter} at {PickUpDate} {PickUpTime}
+CarSearchIntent find me a car at {FirstTLALetter} at {PickUpDate} {PickUpTime}
+CarSearchIntent a car at {FirstTLALetter} at {PickUpDate} {PickUpTime}
+CarSearchIntent find a car at {FirstTLALetter} from {PickUpDate} to {DropOffDate}
+CarSearchIntent find me a car at {FirstTLALetter} from {PickUpDate} to {DropOffDate}
+CarSearchIntent a car at {FirstTLALetter} from {PickUpDate} to {DropOffDate}
+CarSearchIntent find a car at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate}
+CarSearchIntent find me a car at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate}
+CarSearchIntent a car at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate}
+CarSearchIntent find a car at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
+CarSearchIntent find me a car at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
+CarSearchIntent a car at {FirstTLALetter} from {PickUpDate} {PickUpTime} to {DropOffDate} {DropOffTime}
 DetailsIntent details about {CarID}
 DetailsIntent tell me about {CarID}
 DetailsIntent read about {CarID}
