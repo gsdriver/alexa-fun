@@ -39,7 +39,7 @@ module.exports = {
 
         for (i = 0; i < carResults.length; i++)
         {
-            result += (" " + (i + 1) + " ... " + CarToText(carResults[i]));
+            result += (" " + (i + 1) + " ... " + CarToText(carResults[i], false));
         }
 
         return result;
@@ -53,7 +53,7 @@ module.exports = {
         }
         else
         {
-            var carText = CarToText(carResults[id - 1]);
+            var carText = CarToText(carResults[id - 1], true);
 
             callback(null, carText + " For a link to the car details, please visit the Alexa app.", carText + "\r\n" + carResults[id - 1].detailsURL);
         }
@@ -101,15 +101,46 @@ function DateToText(date)
     return result;
 }
 
-function CarToText(carInfo)
+function GetCurrencyText(price, currency)
+{
+    var result;
+
+    if (currency == "USD")
+    {
+        var dollars = Math.floor(price);
+        var cents = Math.floor(price * 100 - dollars * 100);
+
+        result = dollars + " dollars";
+        if (cents)
+        {
+            result += " and " + cents + " cents";
+        }
+    }
+    else
+    {
+        result = price + " " + currency;
+    }
+
+    return result;
+}
+
+function CarToText(carInfo, detailed)
 {
     var result = "";
 
     // We return CarMakeModel, CarClass, SupplierName, and total price
-    result += "For " + carInfo.price + " " + ((carInfo.currency == "USD") ? "dollars" : carInfo.currency);
-    result += " a " + carInfo.model;
-    result += " from " + carInfo.supplier;
-    result += " which is a " + carInfo.class + " option.";
+    if (detailed)
+    {
+        result += "For " + GetCurrencyText(carInfo.price, carInfo.currency);
+        result += " a " + carInfo.model;
+        result += " from " + carInfo.supplier;
+        result += " which is a " + carInfo.class + " option.";
+    }
+    else
+    {
+        result += "A " + carInfo.class;
+        result += " for " + GetCurrencyText(carInfo.price, carInfo.currency) + ".";
+    }
 
     return result;
 }
