@@ -31,7 +31,7 @@ module.exports = {
     // Does a Car Search
     DoCarSearch: function (params, callback)
     {
-        GetCarResults(params, function(error, carResults)
+        GetCarResults(params, function(error, ewsResults)
         {
             // Now that we have results, we need to turn the results into a string
             if (error)
@@ -40,6 +40,24 @@ module.exports = {
             }
             else
             {
+                // Pull out
+                var carResults = [];
+
+                // Return only the fields we care about
+                ewsResults.CarInfoList.CarInfo.forEach(car => {
+                    var newCar = {};
+
+                    newCar.price = car.Price.TotalRate.Value;
+                    newCar.currency = car.Price.TotalRate.Currency;
+                    newCar.model = car.CarMakeModel;
+                    newCar.class = car.CarClass;
+                    newCar.supplier = car.SupplierName;
+                    newCar.imageURL = car.ThumbnailUrl;
+                    newCar.detailsURL = car.DetailsUrl;
+
+                    carResults.push(newCar);
+                });
+
                 callback(null, carResults);
             }
         });

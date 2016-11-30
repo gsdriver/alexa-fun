@@ -29,14 +29,18 @@ module.exports = {
     GetCarResultText : function (params, carResults)
     {
         var result = "";
+        var i;
 
-        result = "I found " + carResults.CarInfoList.CarInfo.length + " results ";
+        result = "I found " + carResults.length + " results ";
         result += "at " + params.pickuplocation;
         result += " from " + DateToText(params.pickupdate);
-        result += " to " + DateToText(params.dropoffdate) + ".";
-        carResults.CarInfoList.CarInfo.forEach(car => {
-            result += " " + CarToText(car);
-        });
+        result += " to " + DateToText(params.dropoffdate) + ". ";
+        result += "You can say the number of the car you would like to hear more about.";
+
+        for (i = 0; i < carResults.length; i++)
+        {
+            result += (" " + (i + 1) + " ... " + CarToText(carResults[i]));
+        }
 
         return result;
     }
@@ -88,10 +92,10 @@ function CarToText(carInfo)
     var result = "";
 
     // We return CarMakeModel, CarClass, SupplierName, and total price
-    result += "For " + carInfo.Price.TotalRate.Value + " dollars";
-    result += " a " + carInfo.CarMakeModel;
-    result += " from " + carInfo.SupplierName;
-    result += " which is a " + carInfo.CarClass + " option.";
+    result += "For " + carInfo.price + " dollars";
+    result += " a " + carInfo.model;
+    result += " from " + carInfo.supplier;
+    result += " which is a " + carInfo.class + " option.";
 
     return result;
 }
