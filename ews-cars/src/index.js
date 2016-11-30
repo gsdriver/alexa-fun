@@ -28,7 +28,8 @@ var AlexaSkill = require('./AlexaSkill');
 var EWSCar = require('./EWSCar');
 var SO = require('./SpeechOutput');
 
-var APP_ID = undefined; //"amzn1.ask.skill.8fb6e399-d431-4943-a797-7a6888e7c6ce";
+var APP_ID = "amzn1.ask.skill.388f5d43-8dad-4b45-99e4-6b4618553866";
+var cachePrefix = "EWSCars:";
 
 var CarSearch = function () {
     AlexaSkill.call(this, APP_ID);
@@ -57,22 +58,46 @@ CarSearch.prototype.intentHandlers = {
         var error = BuildCarSearchParams(intent, params);
 
         if (error) {
-            SendAlexaResponse(error, null, null, null, response);
+            SendAlexaResponse(error, null, null, null, null, response);
         }
         else {
             // Let's get the car search results from EWS
             EWSCar.DoCarSearch(params, function(speechError, carList) {
                 if (speechError) {
-                    SendAlexaResponse(speechError, null, null, null, response);
+                    SendAlexaResponse(speechError, null, null, null, null, response);
                 }
                 else {
                     var speechResponse = SO.GetCarResultText(params, carList);
 
-                    SendAlexaResponse(null, speechResponse, null, null, response);
+                    session.attributes.carList = carList;
+                    SendAlexaResponse(null, null, speechResponse, "Say the number of the car you would like more details about.", null, response);
                 }
             });
         }
     },
+   // Details on a specific restaurant
+   "DetailsIntent" : function (intent, session, response) {
+       var idSlot = intent.slots.CarID;
+
+       if (!idSlot || !idSlot.value)
+       {
+           SendAlexaResponse("I'm sorry, I didn't hear a number of the car you wanted details about.", null, null, null, null, response);
+           return;
+       }
+
+       // They need to have a list to read details from
+       if (!session.attributes || !session.attributes.carList)
+       {
+            // I need a prior search to work properly
+            SendAlexaResponse("You need to get results before asking for car details", null, null, null, null, response);
+       }
+        else
+        {
+            SO.ReadCarDetails(session.attributes.carList, idSlot.value, function(error, result, cardText) {
+                SendAlexaResponse(error, result, null, null, cardText, response);
+            });
+        }
+   },
     // Stop intent
     "AMAZON.StopIntent": function (intent, session, response) {
         var speechOutput = "Goodbye";
@@ -106,7 +131,7 @@ CarSearch.prototype.intentHandlers = {
  * of the speechQuestion (just asking what they want to do rather than
  * giving a full game status)
  */
-function SendAlexaResponse(speechError, speechResponse, speechQuestion, repromptQuestion, response)
+function SendAlexaResponse(speechError, speechResponse, speechQuestion, repromptQuestion, cardContent, response)
 {
     var speechOutput;
     var repromptOutput;
@@ -129,7 +154,7 @@ function SendAlexaResponse(speechError, speechResponse, speechQuestion, reprompt
             speech: speechResponse,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
-        response.tellWithCard(speechOutput, cardTitle, speechResponse);
+        response.tellWithCard(speechOutput, cardTitle, ((cardContent) ? cardContent : speechResponse));
     }
     else {
         speechOutput = {
@@ -140,7 +165,7 @@ function SendAlexaResponse(speechError, speechResponse, speechQuestion, reprompt
             speech: repromptQuestion,
             type: AlexaSkill.speechOutputType.PLAIN_TEXT
         };
-        response.askWithCard(speechOutput, repromptOutput, cardTitle, speechQuestion);
+        response.askWithCard(speechOutput, repromptOutput, cardTitle, ((cardContent) ? cardContent : speechQuestion));
     }
 }
 
@@ -226,15 +251,15 @@ function BuildCarSearchParams(intent, searchParams)
     var dat;
 
     // I only support airport codes
-    if (!intent.slots.Code1 || !intent.slots.Code1.value ||
-            !intent.slots.Code2 || !intent.slots.Code2.value ||
-            !intent.slots.Code3 || !intent.slots.Code3.value)
+    if (!intent.slots.FirstTLALetter || !intent.slots.FirstTLALetter.value ||
+            !intent.slots.SecondTLALetter || !intent.slots.SecondTLALetter.value ||
+            !intent.slots.ThirdTLALetter || !intent.slots.ThirdTLALetter.value)
     {
         // I need a three-letter airport code
         return "Please specify a three-letter airport code";
     }
 
-    airportCode = intent.slots.Code1.value + intent.slots.Code2.value + intent.slots.Code3.value;
+    airportCode = intent.slots.FirstTLALetter.value + intent.slots.SecondTLALetter.value + intent.slots.ThirdTLALetter.value;
     if (airportCode.length != 3)
     {
         return (airportCode + " is not a valid three-letter airport code");

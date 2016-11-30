@@ -43,6 +43,20 @@ module.exports = {
         }
 
         return result;
+    },
+    ReadCarDetails : function (carResults, id, callback)
+    {
+        // Is this a valid ID to ask for?
+        if (id > carResults.length)
+        {
+            callback(id + " is not a valid option in a list of " + carResults.length, null, null);
+        }
+        else
+        {
+            var carText = CarToText(carResults[id - 1]);
+
+            callback(null, carText + " For a link to the car details, please visit the Alexa app.", carText + "\r\n" + carResults[id - 1].detailsURL);
+        }
     }
 };
 
@@ -92,7 +106,7 @@ function CarToText(carInfo)
     var result = "";
 
     // We return CarMakeModel, CarClass, SupplierName, and total price
-    result += "For " + carInfo.price + " dollars";
+    result += "For " + carInfo.price + " " + ((carInfo.currency == "USD") ? "dollars" : carInfo.currency);
     result += " a " + carInfo.model;
     result += " from " + carInfo.supplier;
     result += " which is a " + carInfo.class + " option.";

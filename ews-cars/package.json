@@ -1,0 +1,18 @@
+{
+  "name": "ews-cars",
+  "version": "1.0.0",
+  "description": "Rental Car Search",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "redis": "^2.6.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test\\app.js"
+  },
+  "author": "gsdriver@live.com",
+  "license": "MIT"
+}

@@ -1,0 +1,55 @@
+{
+  "intents": [
+    {
+      "intent": "CarSearchIntent",
+      "slots": [
+      {
+        "name": "FirstTLALetter",
+        "type": "LIST_OF_LETTERS"
+      },
+      {
+        "name": "SecondTLALetter",
+        "type": "LIST_OF_LETTERS"
+      },
+      {
+        "name": "ThirdTLALetter",
+        "type": "LIST_OF_LETTERS"
+      },
+      {
+        "name": "PickUpDate",
+        "type": "AMAZON.Date"
+      },
+      {
+        "name": "PickUpTime",
+        "type": "AMAZON.Time"
+      },
+      {
+        "name": "DropOffDate",
+        "type": "AMAZON.Date"
+      },
+      {
+        "name": "DropOffTime",
+        "type": "AMAZON.Time"
+      }
+    ]
+    },
+    {
+      "intent": "DetailsIntent",
+      "slots": [
+        {
+          "name": "CarID",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}

@@ -4,20 +4,22 @@ function BuildEvent(argv)
 {
     // Templates that can fill in the intent
     var carSearchIntent = {"name": "CarSearchIntent",
-        "slots": {"Code1": {"name": "Code1", "value": ""},
-                "Code2": {"name": "Code2", "value": ""},
-                "Code3": {"name": "Code3", "value": ""},
+        "slots": {"FirstTLALetter": {"name": "FirstTLALetter", "value": ""},
+                "SecondTLALetter": {"name": "SecondTLALetter", "value": ""},
+                "ThirdTLALetter": {"name": "ThirdTLALettere3", "value": ""},
                 "PickUpDate": {"name": "PickUpDate"},
                 "PickUpTime": {"name": "PickUpTime"},
                 "DropOffDate": {"name": "DropOffDate"},
                 "DropOffTime": {"name": "DropOffTime"}
     }};
+    var detailsIntent = {"name": "DetailsIntent",
+        "slots" : {"CarID": {"name": "CarID", "value": ""}}};
 
     var lambda = {
        "session": {
          "sessionId": "SessionId.c88ec34d-28b0-46f6-a4c7-120d8fba8fa7",
          "application": {
-           "applicationId": "amzn1.ask.skill.8fb6e399-d431-4943-a797-7a6888e7c6ce"
+           "applicationId": "amzn1.ask.skill.388f5d43-8dad-4b45-99e4-6b4618553866"
          },
          "attributes": {},
          "user": {
@@ -39,7 +41,7 @@ function BuildEvent(argv)
        "session": {
          "sessionId": "SessionId.c88ec34d-28b0-46f6-a4c7-120d8fba8fa7",
          "application": {
-           "applicationId": "amzn1.ask.skill.8fb6e399-d431-4943-a797-7a6888e7c6ce"
+           "applicationId": "amzn1.ask.skill.388f5d43-8dad-4b45-99e4-6b4618553866"
          },
          "attributes": {},
          "user": {
@@ -65,9 +67,9 @@ function BuildEvent(argv)
     else if (argv[2] == "search")
     {
         lambda.request.intent = carSearchIntent;
-        carSearchIntent.slots.Code1.value = (argv.length > 3) ? argv[3] : "";
-        carSearchIntent.slots.Code2.value = (argv.length > 4) ? argv[4] : "";
-        carSearchIntent.slots.Code3.value = (argv.length > 5) ? argv[5] : "";
+        carSearchIntent.slots.FirstTLALetter.value = (argv.length > 3) ? argv[3] : "";
+        carSearchIntent.slots.SecondTLALetter.value = (argv.length > 4) ? argv[4] : "";
+        carSearchIntent.slots.ThirdTLALetter.value = (argv.length > 5) ? argv[5] : "";
         if (argv.length > 6)
         {
             // Pickup date
@@ -95,6 +97,11 @@ function BuildEvent(argv)
             }
         }
     }
+    else if (argv[2] == "details")
+    {
+        lambda.request.intent = detailsIntent;
+        detailsIntent.slots.CarID.value = (argv.length > 3) ? argv[3] : 1;
+    }
     else
     {
         // Sorry, no can do this one
@@ -117,4 +124,3 @@ myResponse.succeed = function(result) {
 
 // Build the event object and call the app
 mainApp.handler(BuildEvent(process.argv), myResponse);
-
