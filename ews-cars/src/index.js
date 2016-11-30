@@ -247,19 +247,14 @@ function GetIntentDate(dateSlot, timeSlot, baseDate, offsetDays)
 
 function BuildCarSearchParams(intent, searchParams)
 {
-    var airportCode;
+    var airportCode = "";
     var dat;
 
-    // I only support airport codes
-    if (!intent.slots.FirstTLALetter || !intent.slots.FirstTLALetter.value ||
-            !intent.slots.SecondTLALetter || !intent.slots.SecondTLALetter.value ||
-            !intent.slots.ThirdTLALetter || !intent.slots.ThirdTLALetter.value)
-    {
-        // I need a three-letter airport code
-        return "Please specify a three-letter airport code";
-    }
+    // I only support three character airport codes
+    airportCode += (!intent.slots.FirstTLALetter || !intent.slots.FirstTLALetter.value) ? "" : intent.slots.FirstTLALetter.value;
+    airportCode += (!intent.slots.SecondTLALetter || !intent.slots.SecondTLALetter.value) ? "" : intent.slots.SecondTLALetter.value;
+    airportCode += (!intent.slots.ThirdTLALetter || !intent.slots.ThirdTLALetter.value) ? "" : intent.slots.ThirdTLALetter.value;
 
-    airportCode = intent.slots.FirstTLALetter.value + intent.slots.SecondTLALetter.value + intent.slots.ThirdTLALetter.value;
     if (airportCode.length != 3)
     {
         return (airportCode + " is not a valid three-letter airport code");
