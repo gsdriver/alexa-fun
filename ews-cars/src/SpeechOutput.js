@@ -32,7 +32,7 @@ module.exports = {
         var i;
 
         result = "I found " + carResults.length + " results ";
-        result += "at " + params.pickuplocation;
+        result += "at " + params.pickupcity;
         result += " from " + DateToText(params.pickupdate);
         result += " to " + DateToText(params.dropoffdate) + ". ";
         result += "You can say the number of the car you would like to hear more about.";

@@ -4,16 +4,8 @@
       "intent": "CarSearchIntent",
       "slots": [
       {
-        "name": "FirstTLALetter",
-        "type": "LIST_OF_LETTERS"
-      },
-      {
-        "name": "SecondTLALetter",
-        "type": "LIST_OF_LETTERS"
-      },
-      {
-        "name": "ThirdTLALetter",
-        "type": "LIST_OF_LETTERS"
+        "name": "Location",
+        "type": "LIST_OF_CITIES"
       },
       {
         "name": "PickUpDate",

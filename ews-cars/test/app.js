@@ -4,9 +4,7 @@ function BuildEvent(argv)
 {
     // Templates that can fill in the intent
     var carSearchIntent = {"name": "CarSearchIntent",
-        "slots": {"FirstTLALetter": {"name": "FirstTLALetter", "value": ""},
-                "SecondTLALetter": {"name": "SecondTLALetter", "value": ""},
-                "ThirdTLALetter": {"name": "ThirdTLALettere3", "value": ""},
+        "slots": {"Location": {"name": "Location", "value": ""},
                 "PickUpDate": {"name": "PickUpDate"},
                 "PickUpTime": {"name": "PickUpTime"},
                 "DropOffDate": {"name": "DropOffDate"},
@@ -67,33 +65,31 @@ function BuildEvent(argv)
     else if (argv[2] == "search")
     {
         lambda.request.intent = carSearchIntent;
-        carSearchIntent.slots.FirstTLALetter.value = (argv.length > 3) ? argv[3] : "";
-        carSearchIntent.slots.SecondTLALetter.value = (argv.length > 4) ? argv[4] : "";
-        carSearchIntent.slots.ThirdTLALetter.value = (argv.length > 5) ? argv[5] : "";
+        carSearchIntent.slots.Location.value = (argv.length > 3) ? argv[3] : "";
+        if (argv.length > 4)
+        {
+            // Pickup date
+            carSearchIntent.slots.PickUpDate.value = argv[4];
+        }
+        if (argv.length > 5)
+        {
+            // Pickup time (if not none)
+            if (argv[5] != "none")
+            {
+                carSearchIntent.slots.PickUpTime.value = argv[5];
+            }
+        }
         if (argv.length > 6)
         {
             // Pickup date
-            carSearchIntent.slots.PickUpDate.value = argv[6];
+            carSearchIntent.slots.DropOffDate.value = argv[6];
         }
         if (argv.length > 7)
         {
             // Pickup time (if not none)
             if (argv[7] != "none")
             {
-                carSearchIntent.slots.PickUpTime.value = argv[7];
-            }
-        }
-        if (argv.length > 8)
-        {
-            // Pickup date
-            carSearchIntent.slots.DropOffDate.value = argv[8];
-        }
-        if (argv.length > 9)
-        {
-            // Pickup time (if not none)
-            if (argv[9] != "none")
-            {
-                carSearchIntent.slots.DropOffTime.value = argv[9];
+                carSearchIntent.slots.DropOffTime.value = argv[7];
             }
         }
     }
