@@ -6,7 +6,10 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "request": "^2.79.0",
+    "xml-js": "^1.0.2"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "test\\app.js"
