@@ -53,15 +53,13 @@ module.exports = {
                         newCar.imageURL = vehicle.Image._text;
                         newCar.detailsURL = vehicle.Products.Product.DeeplinkURL._cdata;
 
-                        // Limit ourselves to 5 results
-                        if (carResults.length < 5)
-                        {
-                            carResults.push(newCar);
-                        }
+                        carResults.push(newCar);
                     });
                 });
 
-                callback(null, carResults);
+                // OK, sort by price and return the five cheapest
+                carResults.sort((a,b) => (a.price - b.price));
+                callback(null, carResults.slice(0,5));
             }
         });
     }
@@ -87,7 +85,9 @@ function GetCarResults(params, callback)
 
     // Build the XML request
     searchXML += '<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../request/SearchRQ.xsd">';
-    searchXML += '<Head><SessionId>8541-9652-8547-9632-8547-8963</SessionId><WSName>Search</WSName><Brand>CR</Brand><POS>us</POS>';
+    searchXML += '<Head><SessionId>'
+    searchXML += config.CRSessionID;
+    searchXML += '</SessionId><WSName>Search</WSName><Brand>CR</Brand><POS>us</POS>';
     searchXML += '<Language>en</Language><AccountId>0</AccountId><Channel>web</Channel></Head>';
     searchXML += '<VehAvail LocationType="IATA" PickUpDateTime="';
     searchXML += FormatDate(params.pickupdate);
