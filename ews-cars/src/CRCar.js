@@ -1,5 +1,5 @@
 /*
- * Calls EWSCar API to perform a search
+ * Calls CarRentals Tarsier API to perform a search
  *
  * Returns results in a JSON array with the following fields:
  *
@@ -18,18 +18,12 @@ var convert = require('xml-js');
 
 module.exports = {
     // Does a Car Search
-    DoCarSearch: function (params, callback)
-    {
-        GetCarResults(params, function(error, CRResults)
-        {
+    DoCarSearch: function (params, callback) {
+        GetCarResults(params, function(error, CRResults) {
             // Now that we have results, we need to turn the results into a string
-            if (error)
-            {
+            if (error) {
                 callback(error, null);
-            }
-            else
-            {
-                // Pull out
+            } else {
                 var carResults = [];
                 var classMapping = {M: 'Mini', N: 'Mini Elite', E: 'Economy', H: 'Economy Elite',
                                     C: 'Compact', D:'Compact Elite', I:'Intermediate', J:'Intermediate Elite',
@@ -38,13 +32,13 @@ module.exports = {
                                     O: 'Oversize', X:'Special'};
 
                 // Return only the fields we care about
-                CRResults.Response.Suppliers.Supplier.forEach(car => {
-                    car.Vehicles.Vehicle.forEach(vehicle => {
+                CRResults.Response.Suppliers.Supplier.forEach(supplier => {
+                    supplier.Vehicles.Vehicle.forEach(vehicle => {
                         var newCar = {};
 
-                        // Car-level data
-                        newCar.supplier = car._attributes.Name;
-                        newCar.currency = car._attributes.Currency;
+                        // Supplier-level data
+                        newCar.supplier = supplier._attributes.Name;
+                        newCar.currency = supplier._attributes.Currency;
 
                         // Vehicle-level data
                         newCar.price = vehicle.Products.Product.Price._attributes.Amount;
@@ -70,13 +64,9 @@ module.exports = {
  */
 function FormatDate(date)
 {
-    var retval = "";
-
     // Convert to ISO-8601 format, then remove milliseconds
-    retval = date.toISOString();
-    retval = retval.substring(0, retval.lastIndexOf(":"));
-    retval += ":00Z";
-    return retval;
+    let isoDate = date.toISOString();
+    return isoDate.substring(0, isoDate.lastIndexOf(':')) + ':00Z';
 }
 
 function GetCarResults(params, callback)
@@ -84,12 +74,10 @@ function GetCarResults(params, callback)
     var searchXML = '<?xml version="1.0" encoding="UTF-8"?>';
 
     // Build the XML request
-    searchXML += '<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../request/SearchRQ.xsd">';
-    searchXML += '<Head><SessionId>'
+    searchXML += '<Request xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../request/SearchRQ.xsd"><Head><SessionId>'
     searchXML += config.CRSessionID;
     searchXML += '</SessionId><WSName>Search</WSName><Brand>CR</Brand><POS>us</POS>';
-    searchXML += '<Language>en</Language><AccountId>0</AccountId><Channel>web</Channel></Head>';
-    searchXML += '<VehAvail LocationType="IATA" PickUpDateTime="';
+    searchXML += '<Language>en</Language><AccountId>0</AccountId><Channel>web</Channel></Head><VehAvail LocationType="IATA" PickUpDateTime="';
     searchXML += FormatDate(params.pickupdate);
     searchXML += '" DropOffDateTime="';
     searchXML += FormatDate(params.dropoffdate);
@@ -99,20 +87,13 @@ function GetCarResults(params, callback)
     searchXML += params.pickuplocation;
     searchXML += '"/></VehAvail> </Request>';
 
-    request.post(
-        {url:config.TarsierEndpoint,
-        body:searchXML,
-        headers: {'Content-Type': 'application/xml'}
-        },
-        function (error, response, body) {
+    request.post({url:config.TarsierEndpoint, body:searchXML, headers: {'Content-Type': 'application/xml'}},
+        (error, response, body) => {
             if (!error && response.statusCode == 200) {
-                var result = convert.xml2json(body, {compact: true, spaces: 4});
-
+                let result = convert.xml2json(body, {compact: true, spaces: 4});
                 callback(null, JSON.parse(result));
-            }
-            else
-            {
-                calback(error, null);
+            } else {
+                calback((error) ? error : response.statusCode, null);
             }
         }
     );
