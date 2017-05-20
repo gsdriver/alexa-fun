@@ -12,125 +12,117 @@
 
 'use strict';
 
-var http = require('http');
-var config = require('./config');
-var querystring = require('querystring');
+const http = require('http');
+const querystring = require('querystring');
 
 module.exports = {
-    // Does a Car Search
-    DoCarSearch: function (params, callback) {
-        GetCarResults(params, function(error, CRResults) {
-            // Now that we have results, we need to turn the results into a string
-            if (error) {
-                callback(error, null);
-            } else {
-                var carResults = [];
-                var classMapping = {M: 'Mini', N: 'Mini Elite', E: 'Economy', H: 'Economy Elite',
-                                    C: 'Compact', D:'Compact Elite', I:'Intermediate', J:'Intermediate Elite',
-                                    S: 'Standard', R:'Standard Elite', F:'Fullsize', G:'Fullsize Elite',
-                                    P: 'Premium', U:'Premium Elite', L:'Luxury', W:'Luxury Elite',
-                                    O: 'Oversize', X:'Special'};
+  // Does a Car Search
+  doCarSearch: function(params, callback) {
+    getCarResults(params, (error, CRResults) => {
+      // Now that we have results, we need to turn the results into a string
+      if (error) {
+        callback(error, null);
+      } else {
+        const carResults = [];
+        const classMapping = {M: 'Mini', N: 'Mini Elite', E: 'Economy', H: 'Economy Elite',
+                            C: 'Compact', D: 'Compact Elite', I: 'Intermediate', J: 'Intermediate Elite',
+                            S: 'Standard', R: 'Standard Elite', F: 'Fullsize', G: 'Fullsize Elite',
+                            P: 'Premium', U: 'Premium Elite', L: 'Luxury', W: 'Luxury Elite',
+                            O: 'Oversize', X: 'Special'};
 
-                // Return only the fields we care about
-                CRResults.products.forEach(product => {
-                    var newCar = {};
-                    const car = GetCar(CRResults.cars, product.carId);
-                    const supplier = GetSupplier(CRResults.suppliers, product.supplierId);
+        // Return only the fields we care about
+        CRResults.products.forEach((product) => {
+          const newCar = {};
+          const car = getCar(CRResults.cars, product.carId);
+          const supplier = getSupplier(CRResults.suppliers, product.supplierId);
 
-                    if (car && supplier) {
-                        newCar.supplier = supplier.name;
-                        newCar.currency = supplier.currency;
-                        newCar.price = product.price.amount.total;
-                        newCar.model = car.model;
-                        newCar.class = classMapping[car.acriss[0]];
-                        newCar.imageURL = car.image;
+          if (car && supplier) {
+            newCar.supplier = supplier.name;
+            newCar.currency = supplier.currency;
+            newCar.price = product.price.amount.total;
+            newCar.model = car.model;
+            newCar.class = classMapping[car.acriss[0]];
+            newCar.imageURL = car.image;
 
-                        carResults.push(newCar);
-                    }
-                });
-
-                // OK, sort by price and return the five cheapest
-                carResults.sort((a,b) => (a.price - b.price));
-                callback(null, carResults.slice(0,5));
-            }
+            carResults.push(newCar);
+          }
         });
-    }
+
+        // OK, sort by price and return the five cheapest
+        carResults.sort((a, b) => (a.price - b.price));
+        callback(null, carResults.slice(0, 5));
+      }
+    });
+  },
 };
 
 /*
  * Internal functions
  */
-function GetSupplier(suppliers, id)
-{
-    let mySupplier;
+function getSupplier(suppliers, id) {
+  let mySupplier;
 
-    suppliers.forEach(supplier => {
-        if (id == supplier.id) {
-            mySupplier = supplier;
-        }
-    });
+  suppliers.forEach((supplier) => {
+    if (id == supplier.id) {
+      mySupplier = supplier;
+    }
+  });
 
-    return mySupplier;
+  return mySupplier;
 }
 
-function GetCar(cars, id)
-{
-    let myCar;
+function getCar(cars, id) {
+  let myCar;
 
-    cars.forEach(car => {
-        if (car.id == id) {
-            myCar = car;
-        }
-    });
+  cars.forEach((car) => {
+    if (car.id == id) {
+      myCar = car;
+    }
+  });
 
-    return myCar;
+  return myCar;
 }
 
-function FormatDate(date)
-{
-    // Convert to ISO-8601 format, then remove seconds and milliseconds
-    // and change the 'T' to a space
-    let isoDate = date.toISOString();
-    isoDate = isoDate.substring(0, isoDate.lastIndexOf(':'));
-    isoDate = isoDate.replace('T', ' ');
-    return isoDate;
+function formatDate(date) {
+  // Convert to ISO-8601 format, then remove seconds and milliseconds
+  // and change the 'T' to a space
+  let isoDate = date.toISOString();
+  isoDate = isoDate.substring(0, isoDate.lastIndexOf(':'));
+  isoDate = isoDate.replace('T', ' ');
+  return isoDate;
 }
 
-function GetCarResults(params, callback)
-{
-    let url = 'http://carrentals-searchapi-dev.us-east-1.elasticbeanstalk.com/search?'
+function getCarResults(params, callback) {
+  let url = 'http://carrentals-searchapi-dev.us-east-1.elasticbeanstalk.com/search?';
 
-    // Build the querystring
-    const paramString = querystring.stringify({pickupLocation: params.pickuplocation,
-      pickupDateTime: FormatDate(params.pickupdate),
-      dropoffLocation: params.pickuplocation,
-      dropoffDateTime: FormatDate(params.dropoffdate),
-      accountId: 1,
-      channelCategory: 'web',
-      externalRequestId: 6});
+  // Build the querystring
+  const paramString = querystring.stringify({pickupLocation: params.pickuplocation,
+    pickupDateTime: formatDate(params.pickupdate),
+    dropoffLocation: params.pickuplocation,
+    dropoffDateTime: formatDate(params.dropoffdate),
+    accountId: 1,
+    channelCategory: 'web',
+    externalRequestId: 6});
 
-    url += paramString;
-    http.get(url, function (res) {
-        if (res.statusCode == 200)
-        {
-            // Great, we should have a game!
-            var fulltext = '';
+  url += paramString;
+  http.get(url, (res) => {
+    if (res.statusCode == 200) {
+      // Great, we should have a game!
+      let fulltext = '';
 
-            res.on('data', function(data) {
-                fulltext += data;
-            });
+      res.on('data', (data) => {
+        fulltext += data;
+      });
 
-            res.on('end', function() {
-                callback(null, JSON.parse(fulltext));
-            });
-        }
-        else
-        {
-            // Sorry, there was an error calling the HTTP endpoint
-            callback("Unable to call endpoint", null);
-        }
-    }).on('error', function (e) {
-        callback("Communications error: " + e.message, null);
-    });
+      res.on('end', () => {
+        callback(null, JSON.parse(fulltext));
+      });
+    } else {
+      // Sorry, there was an error calling the HTTP endpoint
+      callback('Unable to call endpoint', null);
+    }
+  }).on('error', (e) => {
+    callback('Communications error: ' + e.message, null);
+  });
 }
 
