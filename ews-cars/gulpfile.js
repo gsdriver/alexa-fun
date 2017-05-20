@@ -44,5 +44,5 @@ gulp.task('clean', () => {
   return del(['build/']);
 });
 
-gulp.task('build',  ['clean', 'zip']); // ['clean', 'lint', 'zip']);
+gulp.task('build', ['clean', 'lint', 'zip']);
 gulp.task('default', ['build']);

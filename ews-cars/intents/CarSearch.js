@@ -4,7 +4,7 @@
 
 'use strict';
 
-const EWSCar = require('../api/CRCar'); //require('./api/EWSCar');
+const EWSCar = require('../api/CRCar'); // require('../api/EWSCar');
 const SO = require('../SpeechOutput');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
         if (speechError) {
           this.emit(':ask', speechError, 'What else can I help with?');
         } else {
-          var speechResponse = SO.getCarResultText(params, carList);
+          const speechResponse = SO.getCarResultText(params, carList);
 
           this.attributes['carList'] = carList;
           this.emit(':ask', speechResponse, 'Say the number of the car you would like more details about.');
@@ -32,18 +32,19 @@ module.exports = {
 };
 
 function getAlexaDate(dateValue) {
-  var date;
-  var now = new Date(Date.now());
+  let myDate = dateValue;
+  let date;
+  const now = new Date(Date.now());
 
   // This will be an ISO-8601 date, though it may have special values that we'll have to account for
   // We check for these special cases as outlined at
   // https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
 
   // A season as follows:  winter: WI, spring: SP, summer: SU, fall: FA
-  var seasonMapping = {'WI': 1, 'SP': 4, 'SU': 7, 'FA': 10};
-  if (seasonMapping[dateValue]) {
+  const seasonMapping = {'WI': 1, 'SP': 4, 'SU': 7, 'FA': 10};
+  if (seasonMapping[myDate]) {
     // Make it the 15th day of this month
-    date = new Date(now.getFullYear(), seasonMapping[dateValue], 15);
+    date = new Date(now.getFullYear(), seasonMapping[myDate], 15);
     if (date < now) {
       // Bump to next year
       date.setFullYear(date.getFullYear() + 1);
@@ -53,9 +54,9 @@ function getAlexaDate(dateValue) {
   }
 
   // Just a week will have a week number (2015-W49)
-  if (dateValue.indexOf('W') > -1) {
-    var segments = dateValue.split('-');
-    var weekNumber = parseInt(segments[1].slice(1));
+  if (myDate.indexOf('W') > -1) {
+    const segments = myDate.split('-');
+    const weekNumber = parseInt(segments[1].slice(1));
 
     // Figure out the week number - then we'll just use the fact that Jan 4 is always week 1
     date = new Date(segments[0], 0, 4);
@@ -71,29 +72,29 @@ function getAlexaDate(dateValue) {
   }
 
   // it could also be a decade (201X)
-  if (dateValue.indexOf('X') > -1) {
+  if (myDate.indexOf('X') > -1) {
     // We don't support this
     return null;
   }
 
   // the month or day may be missing (e.g. 2015-12 or 2016)
-  var segments = dateValue.split('-');
+  const segments = myDate.split('-');
   if (segments.length == 1) {
     // Just a year?
-    dateValue += '-01-15';
+    myDate += '-01-15';
   } else if (segments.length == 2) {
     // No day?
-    dateValue += '-15';
+    myDate += '-15';
   }
 
   // OK, maybe it's just a date
-  var base = new Date(dateValue);
+  const base = new Date(myDate);
   date = new Date(Date.UTC(base.getFullYear(), base.getMonth(), base.getDate()));
-  return base;
+  return date;
 }
 
 function getIntentDate(dateSlot, timeSlot, baseDate, offsetDays) {
-  var dat = null;
+  let dat;
 
   // Is there a date in the slot?
   if (dateSlot && dateSlot.value) {
@@ -103,13 +104,13 @@ function getIntentDate(dateSlot, timeSlot, baseDate, offsetDays) {
       // Do I have a time?
       if (timeSlot && timeSlot.value) {
         // Can be one of these special values - night: NI, morning: MO, afternoon: AF, evening: EV
-        var timeMapping = {'ni': 21, 'mo': 9, 'af': 14, 'ev': 17};
+        const timeMapping = {'ni': 21, 'mo': 9, 'af': 14, 'ev': 17};
 
         if (timeMapping[timeSlot.value.toLowerCase()]) {
             dat.setUTCHours(timeMapping[timeSlot.value.toLowerCase()], 0);
         } else {
             // Split it by the colon
-            var times = timeSlot.value.split(':');
+            const times = timeSlot.value.split(':');
 
             if ((times.length >= 2) && !isNaN(parseInt(times[0])) && !isNaN(parseInt(times[1]))) {
                 dat.setUTCHours(parseInt(times[0]), parseInt(times[1]));
@@ -139,7 +140,7 @@ function getIntentDate(dateSlot, timeSlot, baseDate, offsetDays) {
 
   if (!dat) {
     // No date, use the baseDate and offset to set the date
-    var base = new Date(baseDate);
+    const base = new Date(baseDate);
     dat = new Date(Date.UTC(base.getFullYear(), base.getMonth(), base.getDate()));
     dat.setDate(dat.getDate() + offsetDays);
 
@@ -152,7 +153,6 @@ function getIntentDate(dateSlot, timeSlot, baseDate, offsetDays) {
 
 function buildCarSearchParams(intent, searchParams) {
   let airportCode = '';
-  let dat;
 
   // If we have a city, then get the TLA from it
   if (!intent.slots.Location || !intent.slots.Location.value) {
@@ -178,7 +178,7 @@ function buildCarSearchParams(intent, searchParams) {
 }
 
 function getAirportCode(location) {
-  // A mapping of US cities to airport codes,  as taken from https://en.wikipedia.org/wiki/List_of_airports_in_the_United_States
+  // A mapping of US cities to airport codes, from https://en.wikipedia.org/wiki/List_of_airports_in_the_United_States
   const cityMapping = {'birmingham': 'BHM', 'dothan': 'DHN', 'huntsville': 'HSV', 'mobile': 'MOB', 'montgomery': 'MGM', 'anchorage': 'ANC',
   'aniak': 'ANI', 'barrow': 'BRW', 'bethel': 'BET', 'cordova': 'CDV', 'prudhoe bay': 'SCC', 'dillingham': 'DLG', 'fairbanks': 'FAI', 'galena': 'GAL',
   'gustavus': 'GST', 'haines': 'HNS', 'homer': 'HOM', 'hoonah': 'HNH', 'juneau': 'JNU', 'kenai': 'ENA', 'ketchikan': 'KTN', 'king salmon': 'AKN',

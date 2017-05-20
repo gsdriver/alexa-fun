@@ -4,7 +4,6 @@
 
 'use strict';
 
-const EWSCar = require('../api/CRCar'); //require('./api/EWSCar');
 const SO = require('../SpeechOutput');
 
 module.exports = {
@@ -21,7 +20,8 @@ module.exports = {
       // I need a prior search to work properly
       this.emit(':ask', 'You need to get results before asking for car details', 'What else can I help with?');
     } else {
-      SO.readCarDetails(this.event.session.attributes.carList, idSlot.value, (error, result, cardText) => {
+      SO.readCarDetails(this.event.session.attributes.carList, idSlot.value,
+        (error, result, cardText) => {
         if (error) {
           this.emit(':ask', error, 'What else can I help with?');
         } else {
