@@ -25,7 +25,7 @@
 'use strict';
 
 const AlexaSkill = require('./AlexaSkill');
-const EWSCar = require('./CRCar'); //require('./EWSCar');
+const EWSCar = require('./api/CRCar'); //require('./api/EWSCar');
 const SO = require('./SpeechOutput');
 
 const APP_ID = 'amzn1.ask.skill.388f5d43-8dad-4b45-99e4-6b4618553866';
@@ -64,7 +64,7 @@ CarSearch.prototype.intentHandlers = {
         if (speechError) {
           sendAlexaResponse(speechError, null, null, null, null, response);
         } else {
-          var speechResponse = SO.GetCarResultText(params, carList);
+          var speechResponse = SO.getCarResultText(params, carList);
 
           session.attributes.carList = carList;
           sendAlexaResponse(null, null, speechResponse, 'Say the number of the car you would like more details about.', null, response);
@@ -86,7 +86,7 @@ CarSearch.prototype.intentHandlers = {
       // I need a prior search to work properly
       sendAlexaResponse('You need to get results before asking for car details', null, null, null, null, response);
     } else {
-      SO.ReadCarDetails(session.attributes.carList, idSlot.value, function(error, result, cardText) {
+      SO.readCarDetails(session.attributes.carList, idSlot.value, function(error, result, cardText) {
         sendAlexaResponse(error, result, null, null, cardText, response);
       });
     }
@@ -279,7 +279,7 @@ function GetIntentDate(dateSlot, timeSlot, baseDate, offsetDays) {
   return dat;
 }
 
-function BuildCarSearchParams(intent, searchParams) {
+function buildCarSearchParams(intent, searchParams) {
   let airportCode = '';
   let dat;
 
@@ -288,7 +288,7 @@ function BuildCarSearchParams(intent, searchParams) {
     return 'You need to specify a city for your car.';
   }
 
-  airportCode = GetAirportCode(intent.slots.Location.value);
+  airportCode = getAirportCode(intent.slots.Location.value);
   if (!airportCode) {
     return (intent.slots.Location.value + ' is not a city I can search for a car.');
   }
@@ -306,7 +306,7 @@ function BuildCarSearchParams(intent, searchParams) {
   return null;
 }
 
-function GetAirportCode(location) {
+function getAirportCode(location) {
     // A mapping of US cities to airport codes,  as taken from https://en.wikipedia.org/wiki/List_of_airports_in_the_United_States
     const cityMapping = {'birmingham': 'BHM', 'dothan': 'DHN', 'huntsville': 'HSV', 'mobile': 'MOB', 'montgomery': 'MGM', 'anchorage': 'ANC',
     'aniak': 'ANI', 'barrow': 'BRW', 'bethel': 'BET', 'cordova': 'CDV', 'prudhoe bay': 'SCC', 'dillingham': 'DLG', 'fairbanks': 'FAI', 'galena': 'GAL',

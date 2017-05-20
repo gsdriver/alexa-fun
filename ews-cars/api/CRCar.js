@@ -11,7 +11,7 @@
 
 'use strict';
 
-const config = require('./config');
+const config = require('../config');
 const request = require('request');
 const convert = require('xml-js');
 
