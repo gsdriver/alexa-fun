@@ -5,7 +5,7 @@
       "slots": [
       {
         "name": "Location",
-        "type": "LIST_OF_CITIES"
+        "type": "AMAZON.US_CITY"
       },
       {
         "name": "PickUpDate",
