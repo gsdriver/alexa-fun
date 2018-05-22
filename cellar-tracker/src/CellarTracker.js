@@ -24,7 +24,7 @@
 
 'use strict';
 
-var http = require('http');
+var https = require('https');
 var config = require('./config');
 
 // Split the fields we care about based on whether they should be read as an integer, string, or float
@@ -37,11 +37,11 @@ module.exports = {
     ReadWineList : function (callback)
     {
         // Format the URL
-        var wineURL = "http://www.cellartracker.com/xlquery.asp?table=List&Location=1&User="
+        var wineURL = "https://www.cellartracker.com/xlquery.asp?table=List&Location=1&User="
                 + encodeURIComponent(config.userName) + "&Password=" + encodeURIComponent(config.password) + "&Format=tab";
         var wineList;
 
-        http.get(wineURL, function (res) {
+        https.get(wineURL, function (res) {
             if (res.statusCode == 200)
             {
                 // Great, we should have a full wine list!
